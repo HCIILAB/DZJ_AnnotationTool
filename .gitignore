@@ -1,0 +1,14 @@
+#no .cshtml
+*.cshtml
+
+#no .txt
+*.txt
+
+#no .pyc
+*.pyc
+
+#no .swp
+*.swp
+
+#no ~
+*~
