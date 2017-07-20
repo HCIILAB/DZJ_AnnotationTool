@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>文字标注工具</title>
+    <script src="/static/jquery-1.7.1.min.js"></script>
+    <script src="/static/rectmove.js"></script>
+    <link rel="stylesheet" href="/static/rectmove.css">
+    <link rel="stylesheet" href="/static/index.css">
+</head>
+<body>
+    <div id="mask" class="hidden">
+        <!-- <div id="mask"> -->
+        <div id="detailPart">
+            <h4>图片放大镜</h4>
+            <img id="largeImage" alt="截取图片">
+            <div id="resizeRectContainer"></div>
+        </div>
+        <div id="resizeRecord">
+            <h4>标记记录
+                <button id="saveRsRecord">保存并退出</button></h4>
+        </div>
+    </div>
+    <div id="container">
+        <header>
+            <span id="home"><a href="{% url 'index' %}">主页</a></span>
+            <span id="selfCheck"><a href="{% url 'selfCheck' %}">检查</a></span>
+            <span id="intro"><a href="{% url 'introduction' %}">使用说明</a></span>
+            <span id="login"><a href="{% url 'login' %}">登录</a></span>
+            <span id="register"><a href="{% url 'register' %}">注册</a></span>
+            <div id="namePart">
+                <span id="EmailName">{% if ret.Email %}{{ ret.Email }}{% endif %}</span>
+                <button id="cancel">退出</button>
+            </div>
+        </header>
+        {% block content %}
+        <div>This is some default content of the website.Please over-write it</div>
+        {% endblock %}
+    </div>
+    <script>
+
+        /* 退出按钮 */
+        $("#cancel").on('click', function () {
+            location.href = "/Error?s=-5";
+        });
+    </script>
+</body>

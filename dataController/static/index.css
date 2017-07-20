@@ -1,0 +1,314 @@
+body {
+    background: #eee;
+}
+
+#mask {
+    position: absolute;
+    width: 1000px;
+    min-height: 700px;
+    z-index: 100;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    background: rgba(13,13,13,0.7);
+}
+
+    #mask.hidden {
+        display: none;
+    }
+
+#detailPart {
+    background: #fff;
+    display: inline-block;
+    width: 500px;
+    height: 530px;
+    margin: 100px 30px;
+    text-align: center;
+    position: relative;
+}
+
+    #detailPart h4 {
+        line-height: 30px;
+        height: 30px;
+    }
+
+#resizeRecord {
+    background: #eee;
+    width: 330px;
+    margin: 100px 30px;
+    height: 530px;
+    float: right;
+    overflow: auto;
+    text-align: center;
+}
+
+    #resizeRecord h4 {
+        text-align: left;
+        line-height: 30px;
+        height: 30px;
+        padding-left: 10px;
+        margin-bottom: 10px;
+    }
+
+#saveRsRecord {
+    float: right;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 4px;
+    background: #eee;
+    height: 24px;
+    width: 100px;
+    line-height: 20px;
+    margin: 3px 10px;
+}
+
+#RectContainer {
+    cursor: pointer;
+}
+
+#resizeRecord .rectItem {
+    margin-bottom: 5px;
+}
+
+.selRect {
+    position: absolute;
+    border: 1px solid red;
+    opacity: 0.8;
+}
+
+#container {
+    background: #fff;
+    width: 1000px;
+    min-height: 700px;
+    height: 100%;
+    margin: auto;
+}
+
+header {
+    height: 50px;
+    border-bottom: 1px solid #aaa;
+}
+
+    header span {
+        float: left;
+        /*width: 80px;*/
+        height: 50px;
+        line-height: 50px;
+        font-size: 20px;
+        cursor: pointer;
+        color: #888;
+        padding-left: 10px;
+        padding-right: 30px;
+    }
+
+        header span a:visited, header span a:link{
+            color: black;
+            text-decoration: none;
+        }
+
+            header span a:hover, header span a:active {
+                color: #0095dd;
+            }
+
+        header span:hover {
+            color: #0095dd;
+        }
+
+#imagePart {
+    /*display: inline-block;*/
+    /*float:left;*/
+    position: absolute;
+    box-sizing: border-box;
+    width: 700px;
+    height: 660px;
+    min-height: 650px;
+    text-align: center;
+}
+
+    #imagePart img {
+        max-width: 100%;
+        max-height: 600px;
+        border: 1px solid #aaa;
+    }
+
+    #imagePart .buttonPart {
+        /*height: 60px;*/
+        width: 300px;
+        position: absolute;
+        left: 50%;
+        margin-left: -150px;
+        bottom: 0;
+    }
+
+#checkButtonPart {
+    height: 60px;
+}
+
+#resizeButtonPart {
+    height: 30px;
+}
+
+.buttonPart button {
+    margin: auto 5px;
+    padding: 3px;
+    cursor: pointer;
+}
+
+
+#indexStatus {
+    display: inline-block;
+    width: 50px;
+}
+
+    #indexStatus span {
+        color: red;
+    }
+
+
+#formPart {
+    /*display: inline-block;*/
+    /*float: right;*/
+    box-sizing: border-box;
+    margin-left: 700px;
+    width: 30%;
+    height: 660px;
+    background: #acc;
+}
+
+    #formPart h3 {
+        text-align: center;
+        color: #333;
+        height: 30px;
+        line-height: 30px;
+        border-bottom: 1px solid #aaa;
+        margin-bottom: 10px;
+    }
+
+    #formPart p {
+        width: 90%;
+        margin: auto;
+        margin-bottom: 10px;
+    }
+
+        #formPart p span {
+            display: inline-block;
+            width: 40px;
+            text-align: center;
+            color: red;
+        }
+
+#rectMessage .formRow {
+    width: 90%;
+    line-height: 30px;
+    margin: auto auto 10px;
+}
+
+label {
+    cursor: pointer;
+}
+
+#rectMessage .formRow .formTitle {
+    width: 30%;
+    /*float: left;*/
+    display: inline-block;
+}
+
+.formTitle.languageTitle, .formTitle.sceneTitle {
+    position: relative;
+    top: -30px;
+}
+
+#rectMessage .formRow .formSel {
+    width: 60%;
+    display: inline-block;
+}
+
+input {
+    margin-left: 10px;
+    margin-right: 3px;
+    cursor: pointer;
+}
+
+    input[type="text"] {
+        cursor: default;
+    }
+
+
+#submit, #confirm {
+    width: 80%;
+    height: 28px;
+    line-height: 28px;
+    position: relative;
+    left: 10%;
+}
+
+#btnExport, #resizeContainer, #clear {
+    display: none;
+}
+
+    #btnExport.show, #resizeContainer.show, #clear.show {
+        display: initial;
+    }
+
+#btnResize::before {
+    content: '进入';
+}
+
+#btnResize.out::before {
+    content: '退出';
+}
+
+#canvas {
+    display: none;
+}
+
+#namePart {
+    float: right;
+}
+
+    #namePart button {
+        height: 30px;
+        width: 50px;
+        margin: 10px;
+        cursor: pointer;
+    }
+
+        #namePart button.hidden {
+            visibility: hidden;
+        }
+
+#checkStatus {
+    display: inline-block;
+    width: 60px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 4px;
+    text-align: center;
+    margin: 5px 10px;
+    font-size: 14px;
+}
+
+    #checkStatus.checked {
+        background-color: #fA5;
+    }
+
+        #checkStatus.checked::before {
+            content: "已";
+        }
+
+    #checkStatus.unchecked {
+        background-color: #aaa;
+    }
+
+        #checkStatus.unchecked::before {
+            content: "未";
+        }
+
+#getUnChecked.btnhid, #chengeIdx.btnhid {
+    visibility: hidden;
+}
+#getUnChecked.btnshow, #chengeIdx.btnshow {
+    visibility: visible;
+}

@@ -1,0 +1,117 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+{% if ret.checkStatus == '-1' %}
+    <script>
+        alert("该账号未曾标注过数据，标注完数据后方可进行检查工作!");
+        location.href = "/";
+    </script>
+    <script>
+        var checkedStatus = false;
+    </script>
+{% elif ret.checkStatus == '-2' %}
+    <script>
+        alert("您已检查完所有相片，可点击”查看已检查图片“按钮查阅您已检查相片！")
+        var markedData = {};
+        markedData.Quality = "";
+        markedData.Language = "";
+        markedData.Scene = "";
+        markedData.Message = "";
+        markedData.IsChecked = false;
+        markedData.photoPath = "/static/res/finished.jpg";
+    </script>
+    <script>
+        var checkedStatus = false;
+    </script>
+{% elif ret.checkStatus == '0' %}
+    <script>
+        var tmpdata = localStorage.getItem($("#namePart span").text() + "_todo");
+        var todoList = tmpdata.split('_');
+        var tmpMessage = todoList.splice(0, 1)[0].split(',');
+        localStorage.setItem($("#namePart span").text() + "_todo", todoList.join('_'));
+        if (todoList.length == 0) {
+            document.cookie = "storeFlag=0";
+        }
+        var markedData = {};
+        markedData.Quality = tmpMessage[1];
+        markedData.Language = tmpMessage[2];
+        markedData.Scene = tmpMessage[3];
+        markedData.Message = tmpMessage.slice(4).join(',');
+        markedData.IsChecked = false;
+        markedData.photoPath = tmpMessage[0];
+    </script>
+    <script>
+        var checkedStatus = true;
+    </script>
+{% else %}
+    <script>
+        localStorage.setItem("{{ ret.Email }}" + "_todo", "{{ ret.todoList }}");
+        var markedData = {
+            Message: "{{ ret.Message }}",
+            photoPath: "{{ ret.photoPath }}",
+            Language: "{{ ret.Language }}",
+            Scene: "{{ ret.Scene }}",
+            Quality: "{{ ret.Quality }}",
+            IsChecked: "{{ ret.IsChecked }}" == "true" ? true : false,
+        };
+
+    </script>    
+    <script>
+        var checkedStatus = true;
+    </script>
+{% endif %}
+
+<div id="imagePart">
+    <img id="image" alt="背景图片" crossorigin="anonymous">
+    <div id="RectContainer"></div>
+    <div class="buttonPart" id="checkButtonPart">
+        <span id="checkStatus" class="checked">检查</span>
+        <button id="getChecked">查看已检查图片</button>
+        <button id="getUnChecked" class="btnhid">继续检查</button>
+        <div id="chengeIdx" class="btnhid">
+            <button id="getPrev">上一张</button>
+            <div id="indexStatus"><span id="curIdx"></span>/<span id="totalIdx"></span></div>
+            <button id="getNext">下一张</button>
+        </div>
+    </div>
+</div>
+<div id="formPart">
+    <h3>表单信息</h3>
+    <form action="" name="rectMessage" method="post" id="rectMessage">
+        <div class="formRow">
+            <span class="formTitle">图片质量</span>
+            <div class="formSel">
+                <input type="radio" name="quality" value="0" id="clr"><label for="clr">清楚</label>
+                <input type="radio" name="quality" value="1" id="unclr"><label for="unclr">不清楚</label>
+            </div>
+        </div>
+        <div class="formRow">
+            <span class="formTitle languageTitle">语言</span>
+            <div class="formSel">
+                <input type="radio" name="language" value="00" id="English"><label for="English">英文</label>
+                <input type="radio" name="language" value="01" id="Chinese"><label for="Chinese">中文</label>
+                <br>
+                <input type="radio" name="language" value="10" id="mix"><label for="mix">中英混合</label>
+                <input type="radio" name="language" value="11" id="other"><label for="other">其他</label>
+            </div>
+        </div>
+        <div class="formRow">
+            <span class="formTitle sceneTitle">场景</span>
+            <div class="formSel">
+                <input type="checkbox" name="scene" value="0100" id="street"><label for="street">街景</label>
+                <input type="checkbox" name="scene" value="0010" id="inside"><label for="inside">室内</label>
+                <br>
+                <input type="checkbox" name="scene" value="0001" id="sign"><label for="sign">路标</label>
+                <input type="checkbox" name="scene" value="1000" id="otherscene"><label for="otherscene">其他</label>
+            </div>
+        </div>
+    </form>
+
+    <h3>完成情况</h3>
+    <p>已检查：<span id="checkedCount">{{ ret.checkedNum }}</span>张,待检查：<span id="toCheckedCount">{{ ret.toMarkNum }}</span>张</p>
+    <h3>标记记录</h3>
+    <div id="record">
+    </div>
+    <button id="confirm">确认</button>
+</div>
+<script src="/static/SelfCheck.js"></script>
+{% endblock %}

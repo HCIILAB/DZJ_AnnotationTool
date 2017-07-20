@@ -1,0 +1,101 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<script>
+    (function () {
+        // var stateidx = location.search.indexOf('state=');
+        // var state = location.search.slice(stateidx + 6, stateidx + 7)
+        // var state = {{ state }}
+        var state = {% if state %}{{ state }}{% else %}''{% endif %};
+        console.log('state:'+state);
+        if ( state == '0') {
+            alert("登陆后方可进行标定工作！");
+            // location.href = 'Login';
+        } else if (state == '1') {
+            alert("登录邮箱或者密码错误，请重试！");
+            // location.href = 'Login';
+        }
+    }())
+</script>
+<style type="text/css">
+    #loginForm {
+        width: 600px;
+        border: 1px solid #333;
+        border-radius: 10px;
+        margin: 30px auto;
+    }
+
+        #loginForm h3 {
+            padding: 10px 0;
+            border-bottom: 1px solid #888;
+            text-align: center;
+        }
+
+    .loginRow {
+        height: 40px;
+        line-height: 40px;
+        margin: 30px;
+        text-align: center;
+    }
+
+        .loginRow button {
+            width: 30%;
+            height: 30px;
+            margin: auto;
+            cursor: pointer;
+        }
+
+    .loginTitle, .loginInput {
+        display: inline-block;
+    }
+
+    .loginTitle {
+        width: 22%;
+        text-align: center;
+    }
+
+    .loginInput {
+        width: 60%;
+        text-align: center;
+    }
+
+        .loginInput input {
+            width: 90%;
+            height: 30px;
+            cursor: default;
+        }
+</style>
+<div id="loginForm">
+    <h3>登录</h3>
+    <form action="/CheckLogin/" method="post">
+	{% csrf_token %}
+        <div class="loginRow">
+            <div class="loginTitle">登录邮箱</div>
+            <div class="loginInput">
+                <input type="email" id="email" name="Email">
+            </div>
+        </div>
+        <div class="loginRow">
+            <div class="loginTitle">登录密码</div>
+            <div class="loginInput">
+                <input type="password" id="password" name="Password">
+            </div>
+        </div>
+        <div class="loginRow">
+            <button id="btnLogin">登录</button>
+        </div>
+    </form>
+</div>
+<script>
+    $(function () {
+        $("#btnLogin").on('click', function (e) {
+            //event.preventDefault();
+            if ($("#email").val() == "" ||  $("#password").val() == "") {
+                alert("输入有误，请重新输入!");
+                event.preventDefault();
+                return false;;
+            }
+
+        })
+    })
+</script>
+{% endblock %}

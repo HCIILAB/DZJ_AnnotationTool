@@ -1,0 +1,112 @@
+﻿{% extends 'base.html' %}
+{% block content %}
+<script>
+    (function () {
+        // var stateidx = location.search.indexOf('state=');
+        // var state = location.search.slice(stateidx + 6, stateidx + 7)
+        var state = {% if state %}{{ state }}{% else %}''{% endif %};
+        console.log('state:'+state);
+        if (state == '0') {
+            alert("注册成功！");
+            location.href = '/';
+        } else if (state == '1') {
+            var idx = location.href.indexOf('?');
+            alert("该账号已被占用，请更换账号重试！");
+            location.href = '/register/';//去除后缀
+        }
+    }())
+</script>
+<style type="text/css">
+    #loginForm {
+        width: 600px;
+        border: 1px solid #333;
+        border-radius: 10px;
+        margin: 30px auto;
+    }
+
+        #loginForm h3 {
+            padding: 10px 0;
+            border-bottom: 1px solid #888;
+            text-align: center;
+        }
+
+    .loginRow {
+        height: 40px;
+        line-height: 40px;
+        margin: 30px;
+        text-align: center;
+    }
+
+        .loginRow button {
+            width: 30%;
+            height: 30px;
+            margin: auto;
+            cursor: pointer;
+        }
+
+    .loginTitle, .loginInput {
+        display: inline-block;
+    }
+
+    .loginTitle {
+        width: 22%;
+        text-align: center;
+    }
+
+    .loginInput {
+        width: 60%;
+        text-align: center;
+    }
+
+        .loginInput input {
+            width: 90%;
+            height: 30px;
+            cursor: default;
+        }
+</style>
+<div id="loginForm">
+    <h3>注册</h3>
+    <form action="/CheckRegister/" method="post">
+        {% csrf_token %}
+        <div class="loginRow">
+            <div class="loginTitle">注册邮箱</div>
+            <div class="loginInput">
+                <input type="email" id="email" name="Email">
+            </div>
+        </div>
+        <div class="loginRow">
+            <div class="loginTitle">注册密码</div>
+            <div class="loginInput">
+                <input type="password" id="password" name="Password">
+            </div>
+        </div>
+        <div class="loginRow">
+            <div class="loginTitle">确认密码</div>
+            <div class="loginInput">
+                <input type="password" id="comfirm">
+            </div>
+        </div>
+        <div class="loginRow">
+            <button id="btnRegister">注册</button>
+        </div>
+    </form>
+
+</div>
+<script>
+    $(function () {
+        $("#btnRegister").on('click', function (e) {
+            //event.preventDefault();
+            if ($("#email").val() == "" || $("#password").val() == "" || $("#comfirm").val() == "") {
+                alert("输入数据不全，请重新输入!");
+                event.preventDefault();
+                return false;;
+            }
+            if ($("#password").val() != $("#comfirm").val()) {
+                alert("两次输入密码不一致，请确认后重试！");
+                event.preventDefault();
+                return false;;
+            }
+        })
+    })
+</script>
+{% endblock %}
