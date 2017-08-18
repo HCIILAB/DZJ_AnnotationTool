@@ -1,32 +1,71 @@
 ﻿{% extends 'base.html' %}
 {% block content %}
-<link href="/static/introduction.css"  rel="stylesheet" />
+<meta charset="utf-8">
+    <title>大藏经标注工具使用说明.md—G:\tmp\大藏经</title>
+    <style type="text/css">
+    html{font-family: sans-serif;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%}body{margin: 0}article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display: block}audio,canvas,progress,video{display: inline-block;vertical-align: baseline}audio:not([controls]){display: none;height: 0}[hidden],template{display: none}a{background: transparent}a:active,a:hover{outline: 0}abbr[title]{border-bottom: 1px dotted}b,strong{font-weight: bold}dfn{font-style: italic}h1{font-size: 2em;margin: 0.67em 0}mark{background: #ff0;color: #000}small{font-size: 80%}sub,sup{font-size: 75%;line-height: 0;position: relative;vertical-align: baseline}sup{top: -0.5em}sub{bottom: -0.25em}img{border: 0}svg:not(:root){overflow: hidden}figure{margin: 1em 40px}hr{box-sizing: content-box;height: 0}pre{overflow: auto}code,kbd,pre,samp{font-family: monospace, monospace;font-size: 1em}button,input,optgroup,select,textarea{color: inherit;font: inherit;margin: 0}button{overflow: visible}button,select{text-transform: none}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance: button;cursor: pointer}button[disabled],html input[disabled]{cursor: default}button::-moz-focus-inner,input::-moz-focus-inner{border: 0;padding: 0}input{line-height: normal}input[type="checkbox"],input[type="radio"]{box-sizing: border-box;padding: 0}input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{height: auto}input[type="search"]{-webkit-appearance: textfield;box-sizing: content-box}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance: none}fieldset{border: 1px solid #c0c0c0;margin: 0 2px;padding: 0.35em 0.625em 0.75em}legend{border: 0;padding: 0}textarea{overflow: auto}optgroup{font-weight: bold}table{border-collapse: collapse;border-spacing: 0}td,th{padding: 0}*{box-sizing: border-box}input,select,textarea,button{font: 13px/1.4 Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"}body{min-width: 1020px;font: 13px/1.4 Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";color: #333;background-color: #fff}a{color: #4183c4;text-decoration: none}a:hover,a:active{text-decoration: underline}hr,.rule{height: 0;margin: 15px 0;overflow: hidden;background: transparent;border: 0;border-bottom: 1px solid #ddd}hr:before,.rule:before{display: table;content: ""}hr:after,.rule:after{display: table;clear: both;content: ""}h1,h2,h3,h4,h5,h6{margin-top: 15px;margin-bottom: 15px;line-height: 1.1}h1{font-size: 30px}h2{font-size: 21px}h3{font-size: 16px}h4{font-size: 14px}h5{font-size: 12px}h6{font-size: 11px}small{font-size: 90%}blockquote{margin: 0}.lead{margin-bottom: 30px;font-size: 20px;font-weight: 300;color: #555}.text-muted{color: #999}.text-danger{color: #bd2c00}.text-emphasized{font-weight: bold;color: #333}ul,ol{padding: 0;margin-top: 0;margin-bottom: 0}ol ol,ul ol{list-style-type: lower-roman}ul ul ol,ul ol ol,ol ul ol,ol ol ol{list-style-type: lower-alpha}dd{margin-left: 0}tt,code{font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;font-size: 12px}pre{margin-top: 0;margin-bottom: 0;font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace}#realtime .status{overflow: visible;position: absolute;top: -5px;left: 0;background: url("/public/images/github-status.png");width: 26px;height: 26px;display: block;margin: 0 5px 0 0}#realtime .up{background-position: 0 0}#realtime .problem{background-position: 0 -53px}#realtime .down{background-position: 0 -26px}.container{max-width: 920px;margin: 0 auto 20px auto}#header{background: #FAFAFA;background: -moz-linear-gradient(#FAFAFA, #EAEAEA);background: -webkit-linear-gradient(#FAFAFA, #EAEAEA);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#fafafa', endColorstr='#eaeaea')";border-bottom: 1px solid #CACACA;box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4),0 0 10px rgba(0, 0, 0, 0.1)}#markup{padding: 3px}#markup article{padding-top: 30px}.markdown-body{overflow: hidden;font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;font-size: 16px;line-height: 1.6;word-wrap: break-word}.markdown-body>*:first-child{margin-top: 0 !important}.markdown-body>*:last-child{margin-bottom: 0 !important}.markdown-body .absent{color: #c00}.markdown-body .anchor{position: absolute;top: 0;left: 0;display: block;padding-right: 6px;padding-left: 30px;margin-left: -30px}.markdown-body .anchor:focus{outline: none}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{position: relative;margin-top: 1em;margin-bottom: 16px;font-weight: bold;line-height: 1.4}.markdown-body h1 .octicon-link,.markdown-body h2 .octicon-link,.markdown-body h3 .octicon-link,.markdown-body h4 .octicon-link,.markdown-body h5 .octicon-link,.markdown-body h6 .octicon-link{display: none;color: #000;vertical-align: middle}.markdown-body h1:hover .anchor,.markdown-body h2:hover .anchor,.markdown-body h3:hover .anchor,.markdown-body h4:hover .anchor,.markdown-body h5:hover .anchor,.markdown-body h6:hover .anchor{padding-left: 8px;margin-left: -30px;text-decoration: none}.markdown-body h1:hover .anchor .octicon-link,.markdown-body h2:hover .anchor .octicon-link,.markdown-body h3:hover .anchor .octicon-link,.markdown-body h4:hover .anchor .octicon-link,.markdown-body h5:hover .anchor .octicon-link,.markdown-body h6:hover .anchor .octicon-link{display: inline-block}.markdown-body h1 tt,.markdown-body h1 code,.markdown-body h2 tt,.markdown-body h2 code,.markdown-body h3 tt,.markdown-body h3 code,.markdown-body h4 tt,.markdown-body h4 code,.markdown-body h5 tt,.markdown-body h5 code,.markdown-body h6 tt,.markdown-body h6 code{font-size: inherit}.markdown-body h1{padding-bottom: 0.3em;font-size: 2.25em;line-height: 1.2;border-bottom: 1px solid #eee}.markdown-body h1 .anchor{line-height: 1}.markdown-body h2{padding-bottom: 0.3em;font-size: 1.75em;line-height: 1.225;border-bottom: 1px solid #eee}.markdown-body h2 .anchor{line-height: 1}.markdown-body h3{font-size: 1.5em;line-height: 1.43}.markdown-body h3 .anchor{line-height: 1.2}.markdown-body h4{font-size: 1.25em}.markdown-body h4 .anchor{line-height: 1.2}.markdown-body h5{font-size: 1em}.markdown-body h5 .anchor{line-height: 1.1}.markdown-body h6{font-size: 1em;color: #777}.markdown-body h6 .anchor{line-height: 1.1}.markdown-body p,.markdown-body blockquote,.markdown-body ul,.markdown-body ol,.markdown-body dl,.markdown-body table,.markdown-body pre{margin-top: 0;margin-bottom: 16px}.markdown-body hr{height: 4px;padding: 0;margin: 16px 0;background-color: #e7e7e7;border: 0 none}.markdown-body ul,.markdown-body ol{padding-left: 2em}.markdown-body ul.no-list,.markdown-body ol.no-list{padding: 0;list-style-type: none}.markdown-body ul ul,.markdown-body ul ol,.markdown-body ol ol,.markdown-body ol ul{margin-top: 0;margin-bottom: 0}.markdown-body li>p{margin-top: 16px}.markdown-body dl{padding: 0}.markdown-body dl dt{padding: 0;margin-top: 16px;font-size: 1em;font-style: italic;font-weight: bold}.markdown-body dl dd{padding: 0 16px;margin-bottom: 16px}.markdown-body blockquote{padding: 0 15px;color: #777;border-left: 4px solid #ddd}.markdown-body blockquote>:first-child{margin-top: 0}.markdown-body blockquote>:last-child{margin-bottom: 0}.markdown-body table{display: block;width: 100%;overflow: auto;word-break: normal;word-break: keep-all}.markdown-body table th{font-weight: bold}.markdown-body table th,.markdown-body table td{padding: 6px 13px;border: 1px solid #ddd}.markdown-body table tr{background-color: #fff;border-top: 1px solid #ccc}.markdown-body table tr:nth-child(2n){background-color: #f8f8f8}.markdown-body img{max-width: 100%;box-sizing: border-box}.markdown-body span.frame{display: block;overflow: hidden}.markdown-body span.frame>span{display: block;float: left;width: auto;padding: 7px;margin: 13px 0 0;overflow: hidden;border: 1px solid #ddd}.markdown-body span.frame span img{display: block;float: left}.markdown-body span.frame span span{display: block;padding: 5px 0 0;clear: both;color: #333}.markdown-body span.align-center{display: block;overflow: hidden;clear: both}.markdown-body span.align-center>span{display: block;margin: 13px auto 0;overflow: hidden;text-align: center}.markdown-body span.align-center span img{margin: 0 auto;text-align: center}.markdown-body span.align-right{display: block;overflow: hidden;clear: both}.markdown-body span.align-right>span{display: block;margin: 13px 0 0;overflow: hidden;text-align: right}.markdown-body span.align-right span img{margin: 0;text-align: right}.markdown-body span.float-left{display: block;float: left;margin-right: 13px;overflow: hidden}.markdown-body span.float-left span{margin: 13px 0 0}.markdown-body span.float-right{display: block;float: right;margin-left: 13px;overflow: hidden}.markdown-body span.float-right>span{display: block;margin: 13px auto 0;overflow: hidden;text-align: right}.markdown-body code,.markdown-body tt{padding: 0;padding-top: 0.2em;padding-bottom: 0.2em;margin: 0;font-size: 85%;background-color: rgba(0,0,0,0.04);border-radius: 3px}.markdown-body code:before,.markdown-body code:after,.markdown-body tt:before,.markdown-body tt:after{letter-spacing: -0.2em;content: "\00a0"}.markdown-body code br,.markdown-body tt br{display: none}.markdown-body del code{text-decoration: inherit}.markdown-body pre>code{padding: 0;margin: 0;font-size: 100%;word-break: normal;white-space: pre;background: transparent;border: 0}.markdown-body .highlight{margin-bottom: 16px}.markdown-body .highlight pre,.markdown-body pre{padding: 16px;overflow: auto;font-size: 85%;line-height: 1.45;background-color: #f7f7f7;border-radius: 3px}.markdown-body .highlight pre{margin-bottom: 0;word-break: normal}.markdown-body pre{word-wrap: normal}.markdown-body pre code,.markdown-body pre tt{display: inline;max-width: initial;padding: 0;margin: 0;overflow: initial;line-height: inherit;word-wrap: normal;background-color: transparent;border: 0}.markdown-body pre code:before,.markdown-body pre code:after,.markdown-body pre tt:before,.markdown-body pre tt:after{content: normal}.markdown-body kbd{display: inline-block;padding: 3px 5px;font-size: 11px;line-height: 10px;color: #555;vertical-align: middle;background-color: #fcfcfc;border: solid 1px #ccc;border-bottom-color: #bbb;border-radius: 3px;box-shadow: inset 0 -1px 0 #bbb}.codehilite{background: #ffffff}.codehilite .c{color: #999988;font-style: italic}.codehilite .err{color: #a61717;background-color: #e3d2d2}.codehilite .k{color: #000000;font-weight: bold}.codehilite .o{color: #000000;font-weight: bold}.codehilite .cm{color: #999988;font-style: italic}.codehilite .cp{color: #999999;font-weight: bold}.codehilite .c1{color: #999988;font-style: italic}.codehilite .cs{color: #999999;font-weight: bold;font-style: italic}.codehilite .gd{color: #000000;background-color: #ffdddd}.codehilite .gd .x{color: #000000;background-color: #ffaaaa}.codehilite .ge{color: #000000;font-style: italic}.codehilite .gr{color: #aa0000}.codehilite .gh{color: #999999}.codehilite .gi{color: #000000;background-color: #ddffdd}.codehilite .gi .x{color: #000000;background-color: #aaffaa}.codehilite .go{color: #888888}.codehilite .gp{color: #555555}.codehilite .gs{font-weight: bold}.codehilite .gu{color: #aaaaaa}.codehilite .gt{color: #aa0000}.codehilite .kc{color: #000000;font-weight: bold}.codehilite .kd{color: #000000;font-weight: bold}.codehilite .kp{color: #000000;font-weight: bold}.codehilite .kr{color: #000000;font-weight: bold}.codehilite .kt{color: #445588;font-weight: bold}.codehilite .m{color: #009999}.codehilite .s{color: #d14}.codehilite .na{color: #008080}.codehilite .nb{color: #0086B3}.codehilite .nc{color: #445588;font-weight: bold}.codehilite .no{color: #008080}.codehilite .ni{color: #800080}.codehilite .ne{color: #990000;font-weight: bold}.codehilite .nf{color: #990000;font-weight: bold}.codehilite .nn{color: #555555}.codehilite .nt{color: #000080}.codehilite .nv{color: #008080}.codehilite .ow{color: #000000;font-weight: bold}.codehilite .w{color: #bbbbbb}.codehilite .mf{color: #009999}.codehilite .mh{color: #009999}.codehilite .mi{color: #009999}.codehilite .mo{color: #009999}.codehilite .sb{color: #d14}.codehilite .sc{color: #d14}.codehilite .sd{color: #d14}.codehilite .s2{color: #d14}.codehilite .se{color: #d14}.codehilite .sh{color: #d14}.codehilite .si{color: #d14}.codehilite .sx{color: #d14}.codehilite .sr{color: #009926}.codehilite .s1{color: #d14}.codehilite .ss{color: #990073}.codehilite .bp{color: #999999}.codehilite .vc{color: #008080}.codehilite .vg{color: #008080}.codehilite .vi{color: #008080}.codehilite .il{color: #009999}
+    </style>
+    <style type="text/css">
+      .markdown-body hr{background:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC")}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="markup">
+        <article id="content" class="markdown-body">
+          <h2>大藏经标注工具使用说明</h2>
+<blockquote>
+<p>制作日期：20170817</p>
+</blockquote>
+<h3>前言</h3>
+<p>欢迎使用大藏经标注工具，使用之前请花5分钟仔细阅读该说明，会提高标注工作的效率。使用过程中出现不正常情况或者对工具有改进意见，可发邮件至515771237@qq.com或联系管理员。</p>
+<p>工具网址：<a href="http://47.91.177.120:9000">http://47.91.177.120:9000</a></p>
+<p><strong>明确标注的任务</strong>，就是将页面所显示的经文图片中所有的文字用框标注出来，并确保所标注的框对应的输入信息是该文字。</p>
+<p><strong>简要的标注步骤</strong>：（新用户）注册 → 登录 → 获取图片，浏览小图 → 选择放大，进行标注 → 保存退出 → 检查所有标注框 → 提交标注结果</p>
+<p><strong><i>为了提高信息输入的效率，建议在标注时从右往左，从上往下进行标注。</i></strong></p>
+<h3>页面及功能介绍</h3>
+<h4>-注册页面</h4>
+<p><img alt="注册页面" src="http://47.91.177.120:9000/static/registerpage.png"></p>
+<p>输入邮箱，密码，注册成为标注用户。</p>
+<h4>-登录页面</h4>
+<p><img alt="登录页面" src="http://47.91.177.120:9000/static/loginpage.png"></p>
+<p>输入注册时填写的邮箱和密码即可登录。</p>
+<h4>-主页</h4>
+<p>整个主页可以分为如图几个部分，</p>
+<p><img alt="主页" src="http://47.91.177.120:9000/static/homepage.png"></p>
 <ol>
-    <li>只有在登录的情况下方可进行标记和检查工作。可以点击“<b>登录</b>”和“<b>注册</b>”进行相关操作,点击“<b>退出</b>”按钮可以退出登录</li>
-    <li>通过长按鼠标左键并拖动鼠标的方式可以选择一个矩形区域，并在<b>表单信息-标机记录区域</b>会出现相应的输入框以及位置坐标显示。</li>
-    <li class="options">从左上角开始按顺时针方向分别为1,2,3,4点。请按照如下几点进行操作：
-    <ul>
-        <li>拖动点2，矩形的<b>高</b>（点1与点4的距离）固定不变，以点1为中心按照鼠标的轨迹的旋转。<b>请保证点2在点1的右方</b></li>
-        <li>拖动点3，矩形的宽高比固定不变，以点1为中心按照鼠标的轨迹的旋转。<b>请保证点3在点1的右方</b></li>
-        <li>拖动点4，矩形的<b>宽</b>（点1与点2的距离）固定不变，以点1为中心按照鼠标的轨迹的旋转。<b>请保证点4在点1的下方</b></li>
-        <li>拖动矩形的边界可进行缩放</li>
-    </ul>
-    </li>
-    <li>关于语言选项：数字按英文处理</li>
-    <li class="option1">拖动矩形操作结束后（松开鼠标时）将会<b>自动聚焦</b>到输入框,用户可<b>直接</b>输入标注信息,无需额外点击输入框。（正在聚焦的矩形框四个点的颜色会变成黄色）</li>
-    <li>点击<b>删除</b>按钮，即可删除相应的矩形框</li>
-    <li class="options">如果文字太小影响标注，可以点击<b>进入缩放模式</b>按钮，按照相同的方式选定放大区域即可。
-        <ul>
-            <li>点击<b>清除</b>按钮可清除当前区域，并重新选择放大区域</li>
-            <li>点击<b>导出</b>按钮则可以看到放大后的图片，并请在<b>图片放大镜</b>区域按照相同操作标定数据</li>
-            <li>该放大区域标注完成后，请务必点击<b>保存并退出</b>按钮</li>
-        </ul>
-    </li>
-    <li>请选择<b>图片质量</b>，<b>语言，</b>以及<b>场景</b>三个必填选项</li>
-    <li>完成情况出会显示用户已标记的<b>图片数量</b>和<b>矩形框数量</b></li>
-    <li>完成图片标注后选择提交进入下一张图片</li>
-    <li class="tips">快捷键提示：Tab键——聚焦至下一矩形框</li>
-    <li>进行检查工作时，如果标注信息无误，点击“确认”或者按回车键即可继续进行下一张相片的检查工作</li>
-    <li>点击<b>上一张</b>按钮可以查看<b>此次打开页面</b>后已检查的相片，如果需要查看已检查所有相片，请点击<b>查看已检查图片</b>按钮，如果需要继续检查，请点击“<b>继续检查</b>”按钮</li>
+<li>图片显示部分：主要用于全图浏览，可点击标注框（红色的方框），点中的框显示为选中状态，同时在标记记录部分会显示其对应的输入框，查看对应的文字信息，如果文字信息有误可进行更正。</li>
+<li>经文信息显示部分：显示经文的信息。</li>
+<li>选中框信息显示部分：显示已选中的标注框的列号（从右开始数）和序号（从上开始数）。</li>
+<li>用户已完成信息显示部分：显示已经完成的图片张数和标注框数。</li>
+<li>标记记录部分：显示标注框的文字信息，选中文字输入框会显示其对应的标注框。</li>
+<li>备选标记部分：备选的文字标记，可点击进行自动输入，从当前选中列按列向后补全。</li>
 </ol>
+<h4>-放大页面</h4>
+<p>点击主页经文信息部分右边的“进入缩放模式”按钮即可进入放大页面，页面以所选中的列作为中心，放大图片的局部区域，页面分为如图几个部分，</p>
+<p><img alt="放大页面" src="http://47.91.177.120:9000/static/workpage.png"></p>
+<ol>
+<li>图片显示部分： 显示局部放大的区域，<strong>请不要再手动在浏览器上放大，即网页的显示倍率不要进行改变，否则图片的标注会出现错误</strong>。</li>
+<li>状态信息显示部分： 显示当前选中框的列号和序号，显示当前的插入状态，向前插入（标注框或列）或者向后插入（标注框或列）。</li>
+<li>操作按钮部分，各按钮作用如下： <br>
+a)  向前插入：切换插入状态到向前插入标注框（或列）<br>
+b)  向后插入：切换插入状态到向后插入标注框（或列）<br>
+c)  上一列：显示上一列标注框<br>
+d)  下一列：显示下一列标注框<br>
+e)  新建列：根据插入状态插入一列<br>
+f)  删除列：删除当前列的所有标注框  </li>
+<li>标记记录部分：只显示在图片显示部分对应标注框的输入框。</li>
+<li>备选标记部分： 同样可通过点击进行自动补全，<strong>由于是根据列号和序号进行自动补全的，所以维持标注框的正确列号和序号很重要</strong>。</li>
+</ol>
+<p>完成所有文字信息的标注并检查无误（包括标注框所在的列信息）后，点击主页的“提交”按钮就可以提交标注结果并获取下一张标注图片。</p>
+<p><strong>快捷键操作说明</strong>：</p>
+<p>Delete键：选中标注框后，按Delete键可删除该标注框<br>
+Tab键：选中标注框后，按Tab键可按<strong>标记记录部分的输入框顺序</strong>切换下一个</p>
+<p><strong>PS</strong>：建议使用谷歌浏览器，可用的网页窗口分辨率大于1050*560。</p>
+<p><strong>操作流程演示</strong>：参考演示视频。</p>
+<h3>Q&amp;A：</h3>
+<p>用于收集日后标注过程中出现的常见问题，归纳并提出参考解决方案。</p>
+        </article>
+      </div>
+    </div>
 {% endblock %}
