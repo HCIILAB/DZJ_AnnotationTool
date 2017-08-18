@@ -1,23 +1,34 @@
 from dataController.models import CompleteDatas, LoginDatas, MessageDatas
+from django.db import transaction
 import datetime
+
+BUSY_FLAG = "-2"  # the flag that indicate the server busy before
+FINISHED_FLAG = "-1"  # the flag that indicate data have been all labeled
+
 
 # get the next photoPath
 
 
 def getNextPhoto(email):
     # get the unassigned datas
-    records = MessageDatas.objects.filter(Status='00')
-    if records.count():
-        # get the first record, change the status and return the path
-        record = records[0]
-        record.Status = '01'
-        record.save()
-        return record.PhotoPath
-    else:
-        # all the data's status is '01' or '11'
-        # return the finished signal
-        path = '-1'
-        return path
+    path = '-1'
+    try:
+        with transaction.atomic():
+            record = MessageDatas.objects.select_for_update().filter(Status='00').first()
+            if record:
+                # get the first record, change the status and return the path
+                # record = records[0]
+                record.Status = '01'
+                path = record.PhotoPath
+                record.save()
+            else:
+                # all the data's status is '01' or '11'
+                # return the finished signal
+                path = '-1'
+    except Exception as e:
+        raise e
+    return path
+
 
 # update the database
 # release the data that have been locked for 40 mins
@@ -57,3 +68,53 @@ def getComplete(email):
     result[2] = record.CurrentImg
     result[3] = record.CheckedCount
     return result
+
+
+def getMessage(photoPath):
+    # return the message data of photoPath
+    message = ''
+    record = MessageDatas.objects.get(PhotoPath=photoPath)
+    if not record:
+        return message
+    message = record.Message
+    return message
+
+
+def getRectNumFromMessage(message):
+    # count the number of rects in the message
+    rectNum = 0
+    labelStr = message.split("!")[0]
+    labelList = labelStr.split(";")
+    for col in labelList:
+        rectNum += len(col.split(",")) / 4
+    return rectNum
+
+
+def distributePhoto(email):
+    # distributePhoto to email and update the completedata
+    # return the imagePath
+    imagePath = BUSY_FLAG
+    try:
+        # if get new data, update the completedata
+        imagePath = getNextPhoto(email)
+        usrComplt = CompleteDatas.objects.get(Email=email)
+        usrComplt.CurrentImg = imagePath
+        usrComplt.save()
+    except Exception as e:
+        print e
+        imagePath = BUSY_FLAG
+    return imagePath
+
+
+def getBookInfo(imagePath):
+    # get the book info from the imagePath
+    bookName = ''
+    volume = ''
+    page = ''
+    record = MessageDatas.objects.get(PhotoPath=imagePath)
+    if not record:
+        return bookName, volume, page
+    bookName = record.BookName
+    volume = record.Volume
+    page = record.Page
+    return bookName, volume, page

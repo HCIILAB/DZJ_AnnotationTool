@@ -62,11 +62,12 @@ DATABASES = {
         #        'ENGINE': 'django.db.backends.sqlite3',
         #        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'textdata',
+        'NAME': 'dazangjingdata',
         'USER': 'root',
         'PASSWORD': 'jingroup#420',
         'HOST': '',
         'PORT': '',
+        'OPTIONS': {'charset': 'utf8mb4'}
     }
 }
 

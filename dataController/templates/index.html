@@ -6,64 +6,47 @@
     </script>
 {% elif ret.status == '-2' or ret.status == '-3' %}
     <script>
-    location.href = "/Error";
+    // location.href = "/Error";
+    alert("服务器忙,请稍后再试");
     </script>
 {% else %}
     <script>
     var initPath = "{{ ret.imagePath }}";
+    var message = "{{ ret.message }}";
     </script>
 {% endif %}
 <div id="imagePart">
 <img id="image" alt="背景图片" crossOrigin = "anonymous">
 <div id="RectContainer"></div>
-<div id="resizeContainer"></div>
+<!--<div id="resizeContainer"></div>-->
 <div class="buttonPart" id="resizeButtonPart">
-<button id="goBack">上一张</button> 
+<!--<button id="goBack">上一张</button>-->
+<span id="bookInfo">{{ ret.bookName }}第{{ ret.volume }}章第{{ret.page}}页</span>
+<span id="workState">
+	当前列:<span id="workStateCol">0</span>
+	当前序号:<span id="workStateIdx">0</span>	
+</span>
 <button id="btnResize">缩放模式</button>
-<button id="clear">清除</button>
-<button id="btnExport">导出</button>
+<!--<button id="clear">清除</button>
+<button id="btnExport">导出</button>-->
 </div>
 
 <canvas id="canvas"></canvas>
 </div>
 <div id="formPart">
-<h3>表单信息</h3>
-<form action="" name="rectMessage" method="post" id="rectMessage">
-<div class="formRow">
-<span class="formTitle">图片质量</span>
-<div class="formSel">
-    <input type="radio" name="quality" value="0" id="clr"><label for="clr">清楚</label>
-    <input type="radio" name="quality" value="1" id="unclr"><label for="unclr">不清楚</label>
-</div>
-</div>
-<div class="formRow">
-<span class="formTitle languageTitle">语言</span>
-<div class="formSel">
-    <input type="radio" name="language" value="00" id="English"><label for="English">英文</label>
-    <input type="radio" name="language" value="01" id="Chinese"><label for="Chinese">中文</label>
-    <br>
-    <input type="radio" name="language" value="10" id="mix"><label for="mix">中英混合</label>
-    <input type="radio" name="language" value="11" id="other"><label for="other">其他</label>
-</div>
-</div>
-<div class="formRow">
-<span class="formTitle sceneTitle">场景</span>
-<div class="formSel">
-    <input type="checkbox" name="scene" value="0100" id="street"><label for="street">街景</label>
-    <input type="checkbox" name="scene" value="0010" id="inside"><label for="inside">室内</label>
-    <br>
-    <input type="checkbox" name="scene" value="0001" id="sign"><label for="sign">路标</label>
-    <input type="checkbox" name="scene" value="1000" id="otherscene"><label for="otherscene">其他</label>
-</div>
-</div>
-</form>
-
 <h3>完成情况</h3>
-<p>已标记：<span id="imageCount">{{ ret.completeCount }}</span>张相片,<span id="rectCount">{{ ret.rectCount }}</span>个矩形框</p>
+<p>已标记：<br>
+<span id="imageCount">{{ ret.completeCount }}</span>张相片<br>
+<span id="rectCount">{{ ret.rectCount }}</span>个矩形框
+</p>
 <h3>标记记录</h3>
 <div id="record">
 </div>
 <button id="submit">提交</button>
+</div>
+<div id="labelPart">
+<h3>备选标记</h3>
+<div id="labelContainer"></div>
 </div>
 <script src="/static/index.js"></script>
 {% endblock %}

@@ -8,12 +8,20 @@
   transform: scale(1.0) rotate(0deg);
   transform-origin: left top;
   border: 1px solid red;
+  cursor: pointer;
 }
+
 .rectUnit.hidden {
   visibility: hidden;
 }
 
-.point {
+.rectUnit.sel{
+  background: red;
+  opacity: 0.3;
+  z-index: 101;
+}
+
+/*.point {
   position: absolute;
   width: 8px;
   height: 8px;
@@ -43,7 +51,7 @@
 .pt4 {
   left: -4px;
   bottom: -4px;
-}
+}*/
 
 
 
@@ -92,13 +100,13 @@
   text-align: center;
   margin-bottom: 20px;
 }
-.rectItem .coorPoint{
+/*.rectItem .coorPoint{
   display: inline-block;
   box-sizing: border-box;
   width: 135px;
   padding:0 10px;
   font-size: 14px;
-}
+}*/
 .rectItem input {
   margin-top: 5px;
 }

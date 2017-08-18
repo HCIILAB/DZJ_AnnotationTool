@@ -28,13 +28,13 @@ class MessageDatas(models.Model):
     # logging the info of each photo
     PhotoPath = models.CharField(max_length=128)
     Email = models.CharField(max_length=30)
-    Message = models.CharField(max_length=3600)
-    Language = models.CharField(max_length=2)
-    Scene = models.CharField(max_length=10)
+    Message = models.TextField()
     RectCount = models.IntegerField()
-    Quality = models.CharField(max_length=2)
     Status = models.CharField(max_length=2)
     IsChecked = models.BooleanField()
+    BookName = models.CharField(max_length=50)
+    Volume = models.CharField(max_length=10)
+    Page = models.CharField(max_length=10)
 
     def __unicode__(self):
         return self.PhotoPath

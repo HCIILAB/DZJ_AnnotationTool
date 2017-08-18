@@ -9,22 +9,10 @@
     <link rel="stylesheet" href="/static/index.css">
 </head>
 <body>
-    <div id="mask" class="hidden">
-        <!-- <div id="mask"> -->
-        <div id="detailPart">
-            <h4>图片放大镜</h4>
-            <img id="largeImage" alt="截取图片">
-            <div id="resizeRectContainer"></div>
-        </div>
-        <div id="resizeRecord">
-            <h4>标记记录
-                <button id="saveRsRecord">保存并退出</button></h4>
-        </div>
-    </div>
     <div id="container">
         <header>
             <span id="home"><a href="{% url 'index' %}">主页</a></span>
-            <span id="selfCheck"><a href="{% url 'selfCheck' %}">检查</a></span>
+            <!--<span id="selfCheck"><a href="{% url 'selfCheck' %}">检查</a></span>-->
             <span id="intro"><a href="{% url 'introduction' %}">使用说明</a></span>
             <span id="login"><a href="{% url 'login' %}">登录</a></span>
             <span id="register"><a href="{% url 'register' %}">注册</a></span>
@@ -36,6 +24,43 @@
         {% block content %}
         <div>This is some default content of the website.Please over-write it</div>
         {% endblock %}
+    </div>
+    <div id="mask" class="hidden">
+        <!-- <div id="mask"> -->
+        <div id="detailPart">
+            <!--<h4>请进行列标注</h4>-->
+            <img id="largeImage" alt="截取图片">
+            <div id="resizeRectContainer"></div>
+        </div>
+        <div id="resizeRecordPart">
+            <h4>
+                当前列:
+                <span id="rsWorkStateCol">0</span>
+                当前序号:
+                <span id="rsWorkStateIdx">0</span>
+            </h4>
+            <h4>
+                当前状态:
+                <span id="insertState">在后插入</span>
+            </h4>
+            <h4>
+                <button id="insertBeforeBtn">在前插入</button>
+                <button id="insertAfterBtn">在后插入</button>
+            </h4>
+            <h4>
+                <button id="preColBtn">前一列</button>
+                <button id="nextColBtn">后一列</button>
+                <button id="newColBtn">新建列</button>
+                <button id="delColBtn">删除列</button>
+            </h4>
+            <h4>标记记录
+                <button id="saveRsRecord">保存并退出</button></h4>
+            <div id="resizeRecord">
+            </div>
+        </div>
+        <div id="resizeLabelContainer">
+            <h4>备选标记</h4>
+        </div>
     </div>
     <script>
 

@@ -3,13 +3,16 @@ from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_exempt
 from dataController.models import CompleteDatas, LoginDatas, MessageDatas
-from dataController.tools import getNextPhoto, getComplete
+from dataController.tools import getNextPhoto, getComplete, getMessage, getRectNumFromMessage, distributePhoto, getBookInfo
 
 import datetime
 import json
 
 
-datapath = '/static/data/'
+# datapath = '/static/data/'
+datapath = '/static/data/closed_beta/'
+BUSY_FLAG = "-2"  # the flag that indicate the server busy before
+FINISHED_FLAG = "-1"  # the flag that indicate data have been all labeled
 
 # Create your views here.
 
@@ -22,27 +25,50 @@ def index(request):
             # initialize some result
             status = ''
             imagePath = ''
+            message = ''
             completeData = []
             ret = {}
             completeCount = 0
             rectCount = 0
+            bookName = ''
+            volume = ''
+            page = ''
             # get the imagePath and complete situation
             # imagePath = getNextPhoto(email)
             completeData = getComplete(email)
             completeCount = completeData[0]
             rectCount = completeData[1]
             imagePath = completeData[2]
+            if imagePath == BUSY_FLAG:
+                # no effective imagePath
+                # distribute again and update
+                imagePath = distributePhoto(email)
             if imagePath[0] == '-':
                 # there is no new image need to be labeled
                 status = imagePath
+            else:
+                message = getMessage(imagePath)
+                bookName, volume, page = getBookInfo(imagePath)
+
             # set the return result
             imagePath = datapath + imagePath
             ret = {'completeCount': completeCount,
                    'rectCount': rectCount,
                    'status': status,
                    'imagePath': imagePath,
+                   'message': message,
+                   'bookName': bookName,
+                   'volume': volume,
+                   'page': page,
                    'Email': email}
-            return render(request, 'index.html', {'ret': ret})
+            # set cookies which will expires 3 days later and return
+            # response
+            response = render(request, 'index.html', {'ret': ret})
+            response.set_cookie(
+                'Email', email, expires=datetime.datetime.now() +
+                datetime.timedelta(days=3))
+            return response
+            # return render(request, 'index.html', {'ret': ret})
         else:
             return redirect('error')
     else:
@@ -177,7 +203,7 @@ def checkRegister(request):
             print 'Password:' + password
             if LoginDatas.objects.filter(Email=email).exists():
                 # the email has exists
-                print 'email has exists'
+                # print 'email has exists'
                 return redirect('register_with_args', state='1')
             else:
                 # the email can be used to register
@@ -185,7 +211,12 @@ def checkRegister(request):
                 newUser = LoginDatas(Email=email, Password=password)
                 newUser.save()
                 # add a record in CompleteDatas
-                imagePath = getNextPhoto(email)
+                try:
+                    imagePath = getNextPhoto(email)
+                except Exception as e:
+                    print e
+                    imagePath = BUSY_FLAG
+                # initialization for a new user
                 newRec = CompleteDatas(
                     Email=email, Count=0, RectCount=0, CheckedCount=0,
                     CurrentImg=imagePath)
@@ -249,44 +280,43 @@ def setMessage(request):
             # extract data
             message = request.POST.get("Message", '')
             photoPath = request.POST.get('PhotoPath', '')
-            language = request.POST.get('Language', '')
-            scene = request.POST.get('Scene', '')
-            quality = request.POST.get('Quality', '')
-            isResubmit = request.POST.get('isResubmit', '')
             # update database
             if MessageDatas.objects.filter(PhotoPath=photoPath).exists():
                 rec = MessageDatas.objects.get(PhotoPath=photoPath)
                 rec.Email = email
                 rec.Message = message.encode('utf8')
-                rec.Language = language
-                rec.Scene = scene
-                rec.RectCount = len(message.split(';'))
-                rec.Quality = quality
+                rec.RectCount = getRectNumFromMessage(message.encode('utf8'))
                 rec.Status = '11'
-                print "Email, Message, Language, Scene, RectCount, Quality"
-                print email, rec.Message, language, scene,\
-                    len(message.split(';')), quality
-                # print type(message.encode('utf8'))
-                # print type(message.split(';')[1].split(',')[-1])
-                # print type(rec.Message)
                 rec.save()
-                # get next imagePath
                 # get complete situation
+                # get next imagePath
                 usrComplt = CompleteDatas.objects.get(Email=email)
                 usrComplt.Count += 1
                 usrComplt.RectCount += rec.RectCount
-                imagePath = getNextPhoto(email)
+                try:
+                    imagePath = getNextPhoto(email)
+                except Exception as e:
+                    print e
+                    imagePath = BUSY_FLAG
                 usrComplt.CurrentImg = imagePath
                 usrComplt.save()
                 # return result
                 ret = {}
                 status = 0
                 if imagePath[0] == '-':
+                    # there is no new image need to be labeled
                     status = imagePath
+                else:
+                    message = getMessage(imagePath)
+                    bookName, volume, page = getBookInfo(imagePath)
                 ret = {"status": status,
                        "nextImage": datapath + imagePath,
                        "completeCount": usrComplt.Count,
-                       "rectTotalRect": usrComplt.RectCount
+                       "rectTotalRect": usrComplt.RectCount,
+                       "message": message,
+                       "bookName": bookName,
+                       "volume": volume,
+                       "page": page,
                        }
                 return HttpResponse(json.dumps(ret), content_type='text/json')
             else:

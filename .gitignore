@@ -12,3 +12,6 @@
 
 #no ~
 *~
+
+#no data
+dataController/static/data/
