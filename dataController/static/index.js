@@ -72,7 +72,7 @@ $(function(){
 	function initLabelFromMessage(message){
 		var labelCon = document.getElementById('labelContainer');
         var rsLabelCon = $("#resizeLabelContainer");
-		var labelAry = message.split('!')[1].split(';');
+		var labelAry = message.split('!')[1].replace(/&lt\;/g, '').replace(/&gt\;/g, '').split(';');
 		for(var col=0;col<labelAry.length;col++){
 			var labelP = document.createElement('p');
 			labelP.innerHTML = (col+1) + "." + labelAry[col];
