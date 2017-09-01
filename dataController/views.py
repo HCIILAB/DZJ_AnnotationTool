@@ -303,6 +303,9 @@ def setMessage(request):
                 # return result
                 ret = {}
                 status = 0
+                bookName = ''
+                volume = ''
+                page = ''
                 if imagePath[0] == '-':
                     # there is no new image need to be labeled
                     status = imagePath

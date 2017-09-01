@@ -189,14 +189,44 @@ $(function(){
     			var oriWidth = $(selectedRect).width();
     			var oriHeight = $(selectedRect).height();
     			var oriLoc = $(selectedRect).position();
-    			$(selectedRect).appendTo(element);
-    			$(".rectItem[data-order=" + order + "]").appendTo(recordelem);
+                var selectedIpt = $(".rectItem[data-order=" + order + "]");          
+                //moving inputs
+                // $(".rectItem[data-order=" + order + "]").appendTo(recordelem);
+                if(!flag){
+                    //moving input from view page to resize page
+                    $(selectedIpt).appendTo(recordelem);   
+                }else{
+                    //moving input from resize page to view page
+                    if(i==0){
+                        //the first input
+                        if(col==0){
+                            //the first col
+                            $(selectedIpt).prependTo(recordelem);
+                        }else if(rectColsManager[col-1].length==0){
+                            //the previous col is empty
+                            $(selectedIpt).appendTo(recordelem);
+                        }else{
+                            //insert after the last input of previous column
+                            var preIpt = $(".rectItem[data-order=" + rectColsManager[col-1].slice(-1)[0] + "]");
+                            $(preIpt).after($(selectedIpt));
+                        }
+                    }else{
+                        //the latter inputs insert after the previous one
+                        var preIpt = $(".rectItem[data-order=" + rectColsManager[col][i-1] + "]");
+                        $(preIpt).after($(selectedIpt));
+                    }
+                }
+                
+    			//moving rects
+                $(selectedRect).appendTo(element); 
                 if (!flag) {
+                    //moving the working column of rects to resize container
                     var newWidth = oriWidth * resizeRect.ratio;
                     var newHeight = oriHeight * resizeRect.ratio;
                     var newTop = oriLoc.top * resizeRect.ratio;
                     var newLeft = (oriLoc.left  - resizeRect.left) * resizeRect.ratio;
                 }else{
+                    //moving the rects from resize container to view container
                     var newWidth = oriWidth / resizeRect.ratio;
                     var newHeight = oriHeight / resizeRect.ratio;
                     var newTop = oriLoc.top / resizeRect.ratio;
@@ -308,13 +338,35 @@ $(function(){
     //update state showing and lastRectOrder from working state
     var updateResizeWorkState = function () {
         //update the work state with the var workingCol
-        $("#rsWorkStateCol").text(parseInt(workingCol)+1);
+        $("#rsWorkStateCol").text((parseInt(workingCol)+1)+"/"+rectColsManager.length);
         $("#rsWorkStateIdx").text(parseInt(workingIdx)+1);
 
         if(workingIdx != -1){
             //focus lastRectOrder to working state
             lastRectOrder = rectColsManager[workingCol][workingIdx];
         }
+    };
+
+    //adjust the position of inputs
+    var inputAdjust = function (order) {
+        if(insertFlag==0){
+            //inserting after
+            if(rectColsManager[workingCol].length==1 || rectColsManager[workingCol].length==0) return;
+            else{
+                var curIpt = $(".rectItem[data-order="+lastRectOrder+"]");
+                var preIpt = $(".rectItem[data-order="+rectColsManager[workingCol][workingIdx-1]+"]");
+                $(preIpt).after($(curIpt));
+            }
+        }else{
+            //inserting before
+            if(rectColsManager[workingCol].length>1){
+                var curIpt = $(".rectItem[data-order="+lastRectOrder+"]");
+                var nxtIpt = $(".rectItem[data-order="+rectColsManager[workingCol][workingIdx+1]+"]");
+                $(nxtIpt).before($(curIpt));
+            }
+        }
+        $(curIpt).find("input").focus();
+        // debugger;
     };
 
     //check the data before submit to server
@@ -549,6 +601,7 @@ $(function(){
     	}
     	// debugger;
         updateResizeWorkState();
+        inputAdjust();
     });
 
     /*开启或退出缩放按钮*/
@@ -589,8 +642,14 @@ $(function(){
             }
             return;
         }
+        //check the data validation
         var result = checkResizeData();
         if (result == false) return;
+
+        //prompt when current column is not the last column of labels
+        if(workingCol<rectColsManager.length-1){
+            if(!(confirm("当前列不是最后一列，是否确认退出？"))) return;
+        }
         
         //move the rects back to view page
         moveRectsToContainer(workingCol, "#RectContainer", "#record", 1);
@@ -764,6 +823,9 @@ $(function(){
         if(!result){
             return;
         }else{
+            //show prompt befor submit
+            if(!(confirm("提交前请确保数据已经完成标注，是否现在提交？"))) return;
+
             //upload the result
             // console.log(result);
             $.post('/setMessage/',{
@@ -820,4 +882,11 @@ $(function(){
             }
         }
     });
+
+
+    //some prompt when user leave the page
+    $(window).bind("beforeunload", function () {
+        return "离开当前页面将不保存未提交的操作，确定是否离开？";
+    });
+
 });
