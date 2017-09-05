@@ -40,6 +40,8 @@ $(function(){
         imageRatio = imgW / imgNaturalW;
         // console.log(ele.width/ele.naturalWidth, ele.height/ele.naturalHeight);
         var pointAry = message.split("!")[0].split(';');
+        // filtering the empty col
+        pointAry = pointAry.filter(function(x){return x.length>0;})
 	    var cols = pointAry.length;
 	    // var rectOrder = 0;
 	    for(var col=0;col<cols;col++){
