@@ -687,6 +687,9 @@ $(function(){
         //updateResizeWorkState with the workingCol
         updateResizeWorkState();
         updateInsertState(0);
+
+        //auto focus on the first rect
+        $("#resizeRecord").find(".rectItem").find("input")[0].focus();
     });
 
     /*保存并转换数据*/
