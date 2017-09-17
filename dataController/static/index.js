@@ -347,7 +347,50 @@ $(function(){
             //focus lastRectOrder to working state
             lastRectOrder = rectColsManager[workingCol][workingIdx];
         }
+
+        //update the preview rect
+        if(!($("#mask").hasClass("hidden")))
+            updatePreviewRect();
     };
+
+    //update the preview rect
+    var updatePreviewRect = function () {
+        //get the position of selected rect in resize page
+        var selectedRect = $(".rectUnit[data-order=" + lastRectOrder + "]");
+        var rsWidth = $(selectedRect).width();
+        var rsHeight = $(selectedRect).height();
+        var rsLoc = $(selectedRect).position();
+        
+        //get the position of selected rect in view page
+        var viewWidth = rsWidth / resizeRect.ratio;
+        var viewHeight = rsHeight / resizeRect.ratio;
+        var viewTop = rsLoc.top / resizeRect.ratio;
+        var viewLeft = rsLoc.left / resizeRect.ratio + resizeRect.left;
+
+        // get the position of selected rect in initial photo
+        var initWidth = viewWidth / imageRatio;
+        var initHeight = viewHeight / imageRatio;
+        var initTop = viewTop / imageRatio;
+        var initLeft = viewLeft / imageRatio;
+
+        // draw the rect on canvas from init image
+        var canvas = $('#rsCanvas')[0]
+        var ctx = canvas.getContext('2d');
+        var image = document.getElementById("image");
+
+        // set the size of preview rect
+        var height = $("#previewRect").height();
+        var width = rsWidth * height / rsHeight;
+        $("#previewRect").width(width);
+
+        canvas.setAttribute("height", height);
+        canvas.setAttribute("width", width);
+        ctx.drawImage(image, initLeft, initTop, initWidth, initHeight, 0, 0, width, height);
+        // var cvsURL = canvas.toDataURL("image/png");
+
+        // $("#rsImg").attr("src", cvsURL);
+        // debugger;
+    }
 
     //adjust the position of inputs
     var inputAdjust = function (order) {

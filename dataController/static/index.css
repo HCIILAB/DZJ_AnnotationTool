@@ -323,6 +323,10 @@ input {
     display: none;
 }
 
+/*#rsCanvas {
+    display: none;
+}*/
+
 #namePart {
     float: right;
 }
@@ -407,4 +411,12 @@ input {
     width: 40px;
     text-align: center;
     color: red;
+}
+
+#previewRect {
+    width: 25%;
+    height: 20%;
+    top: 10%;
+    position: absolute;
+    right: 1%;
 }
