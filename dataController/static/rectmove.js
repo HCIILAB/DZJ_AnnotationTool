@@ -615,6 +615,7 @@
             // self._computeCoordinate();
             $(ipt).focus(function () {
                 $(self.rectUnit).addClass('sel');
+                $.event.trigger("logRectOrder", self.order);
             }).blur(function () {
                 $(self.rectUnit).removeClass('sel');
             });
@@ -623,9 +624,8 @@
                 self.delete();
             });
 
-            $(ipt).focus();
-
             $.event.trigger("newRectInit", self.order);
+            $(ipt).focus();
         },
 
         _refreshParam: function (width, height, scale, location) {
@@ -669,7 +669,7 @@
         focus: function () {
             var self = this;
             $(self.input).focus();
-            $.event.trigger("logRectOrder", self.order);
+            // $.event.trigger("logRectOrder", self.order);
         },
 
         upmove: function (dh) {

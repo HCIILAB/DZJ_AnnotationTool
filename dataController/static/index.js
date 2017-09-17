@@ -15,6 +15,11 @@ var imageRatio; //the ratio of image visible size over image natural size
 // modeFlag: 0 for rectangle, 1 for irregular quadrilateral
 // var modeFlag = 0;
 
+var parseRound = function (value, num) {
+    // parse the value into float with fixed num of num
+    return parseFloat(parseFloat(value).toFixed(num));
+}
+
 $(function(){
 	function getInitParam(message, textValue){
 		var x = message[0];
@@ -23,11 +28,11 @@ $(function(){
 		var h = message[3];
 		return {
 			element: "#RectContainer",
-			width: parseInt(w),
-			height: parseInt(h),
+			width: parseRound(w, 2),
+			height: parseRound(h, 2),
 			location: {
-				left: parseInt(x),
-				top: parseInt(y)
+				left: parseRound(x, 2),
+				top: parseRound(y, 2)
 			},
 			scale: 1.0,
 			textMessage: textValue
@@ -56,9 +61,10 @@ $(function(){
                 // workingIdx = i; //updated at event newRectinit
                 var tmpcoor = [];
                 for(var j=0;j<4;j++){
-                    tmpcoor.push(parseInt(coor[j+i*4]) * imageRatio);
+                    tmpcoor.push(parseRound(coor[j+i*4], 2) * imageRatio);
                 } 
                 var initParam = getInitParam(tmpcoor, ' ');
+                // debugger;
                 var rectmove = new lib.rectmove(initParam);
                 rectmove.init();
 	   			// rectColAry.push(rectmove);
@@ -105,6 +111,14 @@ $(function(){
             lastRectOrder = 0;
             workingCol = 0;
             workingIdx = 0;
+        }
+    }
+
+    //auto complete the label input
+    function autoCompltIpt() {
+        //complete the input from the first column by default
+        if(lastRectOrder!=-1){
+            $("#labelContainer>p:first").click();
         }
     }
 
@@ -541,7 +555,8 @@ $(function(){
 	    initRectsFromMessage(this, window.message);
         //after initialization rects, focus on the first one
         focusOnFirstRect();
-	    initLabelFromMessage(window.message);
+        initLabelFromMessage(window.message);
+        autoCompltIpt();
         // debugger;
     });
 
