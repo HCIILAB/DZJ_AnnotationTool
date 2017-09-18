@@ -393,9 +393,21 @@ $(function(){
         var image = document.getElementById("image");
 
         // set the size of preview rect
-        var height = $("#previewRect").height();
-        var width = rsWidth * height / rsHeight;
+        var height = 0;
+        var width = 0;
+
+        // preview size normalization
+        var detailPart = $("#detailPart");
+        if(rsWidth/rsHeight>275/183){
+            width = $(detailPart).width()*0.35;
+            height = width * rsHeight / rsWidth;
+        }else{
+            height = $(detailPart).height()*0.2;
+            width = height * rsWidth / rsHeight;
+        }
+
         $("#previewRect").width(width);
+        $("#previewRect").height(height);
 
         canvas.setAttribute("height", height);
         canvas.setAttribute("width", width);
