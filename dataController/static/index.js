@@ -363,7 +363,7 @@ $(function(){
         }
 
         //update the preview rect
-        if(!($("#mask").hasClass("hidden")))
+        if(!($("#mask").hasClass("hidden"))&&lastRectOrder!=-1)
             updatePreviewRect();
     };
 
