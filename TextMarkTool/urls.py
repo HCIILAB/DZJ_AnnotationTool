@@ -43,4 +43,5 @@ urlpatterns = patterns('',
                        url(r'^search_form/$', dc_views.search_form,
                            name='search_form'),
                        url(r'^search/$', dc_views.search, name='search'),
+                       url(r'^tempSave/$', dc_views.tempSave, name='tempSave'),
                        )

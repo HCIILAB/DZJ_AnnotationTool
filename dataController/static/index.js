@@ -38,7 +38,7 @@ $(function(){
         // console.log(ele.width/ele.naturalWidth, ele.height/ele.naturalHeight);
         var pointAry = message.split("!")[0].split(';');
         // filtering the empty col
-        pointAry = pointAry.filter(function(x){return x.length>0;})
+        pointAry = pointAry.filter(function(x){return x.length>0;});
 	    var cols = pointAry.length;
 	    // var rectOrder = 0;
 	    for(var col=0;col<cols;col++){
@@ -73,6 +73,7 @@ $(function(){
 		var labelCon = document.getElementById('labelContainer');
         var rsLabelCon = $("#resizeLabelContainer");
 		var labelAry = message.split('!')[1].replace(/&lt\;/g, '').replace(/&gt\;/g, '').split(';');
+        labelAry = labelAry.filter(function(x){return x.length>0;});
 		for(var col=0;col<labelAry.length;col++){
 			var labelP = document.createElement('p');
 			labelP.innerHTML = (col+1) + "." + labelAry[col];
@@ -529,6 +530,122 @@ $(function(){
         return result;
     };
 
+    var saveTempData = function () {
+        // save data on the server
+        var result = transForTempSubmit();
+        if(!result){
+            return;
+        }else{
+            //upload the result
+            // console.log(result);
+            $.post('/tempSave/',{
+                Message: result,
+                PhotoPath: $("#image").attr("src").split("/").reverse()[0],
+                reSubmitFlag: reSubmitFlag,
+            }, function (data) {
+                //callback function
+                var status = parseInt(data.status);
+                if(status == -5){
+                    //error happens
+                    alert("错误");
+                    return;
+                }else if(status == -2){
+                    //server busy
+                    alert("服务器忙,请稍后再试");
+                    return;
+                }else if(status>=0){
+                    // temp saving succeeded
+                    console.log("Saving OK!");
+                }else{
+                    location.href = "/Error?s=" + data.status;
+                }
+            });
+        }
+    };
+
+    var transForTempSubmit = function () {
+        // transfer the data for temporary saving
+        var result = [];
+        
+        //check empty inputs and illegal labels
+        var textIpt = $(".textInput");
+        if(textIpt.length==0){
+            //no labeling info
+            alert("无标注信息，无法提交");
+            return false;
+        }
+        //checking input
+        for (var i = 0; i < textIpt.length; i++) {
+            textIpt[i].value = textIpt[i].value.trim();
+            if(textIpt[i].value == ''){
+                console.log("empty input");
+            }else if(textIpt[i].value.indexOf(";")!=-1||textIpt[i].value.indexOf("；")!=-1){
+                alert('输入含有非法字符";"');
+                $(textIpt[i]).focus();
+                return false;
+            }else if(textIpt[i].value.indexOf("?")!=-1||textIpt[i].value.indexOf("？")!=-1){
+                alert('输入含有非法字符"?"');
+                $(textIpt[i]).focus();
+                return false;
+            }else if(textIpt[i].value.indexOf("!")!=-1||textIpt[i].value.indexOf("！")!=-1){
+                alert('输入含有非法字符"!"');
+                $(textIpt[i]).focus();
+                return false;
+            }else if(textIpt[i].value.length > 1){
+                alert('多于1个字符，请检查');
+                $(textIpt[i]).focus();
+                return false;
+            }
+        }
+
+        //check if exists empty column
+        //check the coordinate if in container
+        var curOrder=0;
+        var containerWidth = $("#RectContainer").width();
+        var containerHeight = $("#RectContainer").height();
+        var coordinateStr = "";
+        var labelStr = "";
+        for (var i = 0; i < rectColsManager.length; i++) {
+            if(rectColsManager[i].length == 0){
+                //empty column
+                rectColsManager.splice(i, 1);
+                alert("含有空白列，已删除1列!");
+            }else{
+                //check coordinate and convert to result, one column
+                for (var j = 0; j < rectColsManager[i].length; j++) {
+                    curOrder = rectColsManager[i][j];
+                    // console.log(curOrder);
+                    var curRect = $(".rectUnit[data-order="+curOrder+"]");
+                    var curIpt = $(".rectItem[data-order="+curOrder+"]");
+                    var rectLeft = $(curRect).position().left;
+                    var rectTop = $(curRect).position().top;
+                    var rectWidth = $(curRect).width();
+                    var rectHeight = $(curRect).height();
+                    if((rectLeft<0)||(rectLeft+rectWidth)>containerWidth||(rectTop<0)||(rectTop+rectHeight)>containerHeight){
+                        //out of size
+                        alert("标注框超出范围，请检查");
+                        $(curIpt).find("input").focus();
+                        return false;
+                    }else{
+                        //all the data has been checked, coordinate and input, one rect
+                        //compute and convert to result
+                        coordinateStr += (rectLeft/imageRatio).toFixed(2) + "," + (rectTop/imageRatio).toFixed(2) + "," + (rectWidth/imageRatio).toFixed(2) + "," + (rectHeight/imageRatio).toFixed(2) + ",";
+                        labelStr += $(curIpt).find("input")[0].value;
+                        // debugger;
+                    }
+                }
+                //column ends
+                coordinateStr = coordinateStr.slice(0, -1) + ";"; //remove the last "," and add ";"
+                labelStr += ";"; //add ";"
+            }
+        }
+
+
+        // result = false;
+        result = coordinateStr.slice(0, -1) + "!" + labelStr.slice(0, -1); //remove the last ";" in coordinateStr and labelStr
+        return result;
+    };
+
     //clear all data existed
     var clearRectData = function ()
     {
@@ -737,6 +854,8 @@ $(function(){
         // $(".rectItem>input").last().focus();
         updateWorkState(0, 0);
 
+        // save temporary data on server
+        saveTempData();
     });
 
     //click on insert before btn

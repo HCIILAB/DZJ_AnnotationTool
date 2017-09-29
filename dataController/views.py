@@ -333,6 +333,68 @@ def setMessage(request):
 
 
 @csrf_exempt
+def tempSave(request):
+    # temporary saving
+    if 'Email' in request.COOKIES:
+        # get the data and update the database
+        email = request.COOKIES.get('Email', '')
+        if email:
+            # extract data
+            message = request.POST.get("Message", '')
+            photoPath = request.POST.get('PhotoPath', '')
+            reSubmitFlag = request.POST.get('reSubmitFlag', '')
+            # update database
+            if MessageDatas.objects.filter(PhotoPath=photoPath).exists():
+                rec = MessageDatas.objects.get(PhotoPath=photoPath)
+                rec.Email = email
+                rec.Message = message.encode('utf8')
+                rec.RectCount = getRectNumFromMessage(message.encode('utf8'))
+                # rec.Status = '11'
+                rec.save()
+                # get complete situation
+                # usrComplt = CompleteDatas.objects.get(Email=email)
+                # if reSubmitFlag == "false":
+                #     usrComplt.Count += 1
+                #     usrComplt.RectCount += rec.RectCount
+                # # get next imagePath
+                # try:
+                #     imagePath = getNextPhoto(email)
+                # except Exception as e:
+                #     print e
+                #     imagePath = BUSY_FLAG
+                # usrComplt.CurrentImg = imagePath
+                # usrComplt.save()
+                # # return result
+                # ret = {}
+                status = 0
+                # bookName = ''
+                # volume = ''
+                # page = ''
+                # if imagePath[0] == '-':
+                #     # there is no new image need to be labeled
+                #     status = imagePath
+                # else:
+                #     message = getMessage(imagePath)
+                #     bookName, volume, page = getBookInfo(imagePath)
+                ret = {"status": status,
+                       # "nextImage": datapath + imagePath,
+                       # "completeCount": usrComplt.Count,
+                       # "rectTotalRect": usrComplt.RectCount,
+                       # "message": message,
+                       # "bookName": bookName,
+                       # "volume": volume,
+                       # "page": page,
+                       }
+                return HttpResponse(json.dumps(ret), content_type='text/json')
+            else:
+                return redirect('error')
+        else:
+            return redirect('error')
+    else:
+        return redirect('login_with_args', state='0')
+
+
+@csrf_exempt
 def setCheckMessage(request):
     # check the email first
     if 'Email' in request.COOKIES:
