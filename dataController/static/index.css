@@ -420,3 +420,13 @@ input {
     position: absolute;
     right: 1%;
 }
+
+#previewLabel {
+    top: 32%;
+    position: absolute;
+    right: 14%;
+}
+
+    #previewLabel p {
+        font-size: xx-large;
+    }

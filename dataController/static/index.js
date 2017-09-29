@@ -93,10 +93,10 @@ $(function(){
    			// debugger;
 		}
 		// debugger;
-		// rectColsManager["0"]["0"].recordUnit.children[1].click();
-		$("#labelContainer>p").on("click", function(){
-    		updateInputFromLabel($(this).data().pIdx);
-    	});
+		// diable the click respone on the viewing page
+		// $("#labelContainer>p").on("click", function(){
+  //   		updateInputFromLabel($(this).data().pIdx);
+  //   	});
         $("#resizeLabelContainer>p").on("click", function(){
             updateInputFromLabel($(this).data().pIdx);
         });
@@ -118,7 +118,7 @@ $(function(){
     function autoCompltIpt() {
         //complete the input from the first column by default
         if(lastRectOrder!=-1){
-            $("#labelContainer>p:first").click();
+            $("#resizeLabelContainer>p:first").click();
         }
     }
 
@@ -363,8 +363,10 @@ $(function(){
         }
 
         //update the preview rect
-        if(!($("#mask").hasClass("hidden"))&&lastRectOrder!=-1)
+        if(!($("#mask").hasClass("hidden"))&&lastRectOrder!=-1){
             updatePreviewRect();
+            updatePreviewLabel();
+        }
     };
 
     //update the preview rect
@@ -412,9 +414,16 @@ $(function(){
         canvas.setAttribute("height", height);
         canvas.setAttribute("width", width);
         ctx.drawImage(image, initLeft, initTop, initWidth, initHeight, 0, 0, width, height);
-        // var cvsURL = canvas.toDataURL("image/png");
 
-        // $("#rsImg").attr("src", cvsURL);
+        // debugger;
+    }
+
+    //update preview label with the label in the input box
+    var updatePreviewLabel = function () {
+        // get the input
+        var curIpt = $(".rectItem[data-order="+lastRectOrder+"]");
+        var preLabel = $("#previewLabel");
+        $(preLabel).find("p").text($(curIpt).find("input")[0].value);
         // debugger;
     }
 
@@ -935,12 +944,14 @@ $(function(){
     });
 
 
-
-
     //相关快捷键操作
     $(document).keydown(function (e) {
         //keyCode:左方向键37,右方向键39，,tab键9， 回车键13, Delete46
         var keyCode = e.keyCode;
+
+        //check active
+        if(document.activeElement.type != "text") return;
+
         if (keyCode == 9) {
             //tab操作，自动聚焦到下一个矩形
             if (document.activeElement.type == "text") {
