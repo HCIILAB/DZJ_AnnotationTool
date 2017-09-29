@@ -1,19 +1,11 @@
 var resizeRect = {
     left: 0,
-    // top: 0,
-    // w: 0,
-    // h: 0,
-    // locx: 0,
-    // locy: 0,
     ratio: 1 //the ratio of image resize size over image visible size
 };
 
-// var resizeRatio; //the ratio of image resize size over image visible size
-
 var imageRatio; //the ratio of image visible size over image natural size
 
-// modeFlag: 0 for rectangle, 1 for irregular quadrilateral
-// var modeFlag = 0;
+var reSubmitFlag;   // the flag will be true if the image has been submited
 
 var parseRound = function (value, num) {
     // parse the value into float with fixed num of num
@@ -573,12 +565,16 @@ $(function(){
         con.setAttribute('style', "width:" + rectBound.width + "px;height:" + rectBound.height + "px;position: absolute;left:" + left + "px;top:" + top + "px;");
         // resizeCon.setAttribute('style', "width:" + rectBound.width + "px;height:" + rectBound.height + "px;position: absolute;left:" + left + "px;top:" + top + "px;z-index:10;");
         if (this.src.indexOf("finished.jpg") >= 0) return;
+
+        //initial the flag
+        reSubmitFlag = false;
+        // debugger;
+
 	    initRectsFromMessage(this, window.message);
         //after initialization rects, focus on the first one
         focusOnFirstRect();
         initLabelFromMessage(window.message);
         autoCompltIpt();
-        // debugger;
     });
 
 	//when the user click on rect
@@ -915,6 +911,7 @@ $(function(){
             $.post('/setMessage/',{
                 Message: result,
                 PhotoPath: $("#image").attr("src").split("/").reverse()[0],
+                reSubmitFlag: reSubmitFlag,
             }, function (data) {
                 //callback function
                 var status = parseInt(data.status);
@@ -940,6 +937,10 @@ $(function(){
                     location.href = "/Error?s=" + data.status;
                 }
             });
+
+            //change the submit flag
+            reSubmitFlag = true;
+            // debugger;
         }
     });
 

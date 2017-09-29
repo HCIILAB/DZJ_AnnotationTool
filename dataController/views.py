@@ -280,6 +280,7 @@ def setMessage(request):
             # extract data
             message = request.POST.get("Message", '')
             photoPath = request.POST.get('PhotoPath', '')
+            reSubmitFlag = request.POST.get('reSubmitFlag', '')
             # update database
             if MessageDatas.objects.filter(PhotoPath=photoPath).exists():
                 rec = MessageDatas.objects.get(PhotoPath=photoPath)
@@ -289,10 +290,11 @@ def setMessage(request):
                 rec.Status = '11'
                 rec.save()
                 # get complete situation
-                # get next imagePath
                 usrComplt = CompleteDatas.objects.get(Email=email)
-                usrComplt.Count += 1
-                usrComplt.RectCount += rec.RectCount
+                if reSubmitFlag == "false":
+                    usrComplt.Count += 1
+                    usrComplt.RectCount += rec.RectCount
+                # get next imagePath
                 try:
                     imagePath = getNextPhoto(email)
                 except Exception as e:
